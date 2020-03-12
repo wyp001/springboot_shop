@@ -1,0 +1,29 @@
+server:
+  servlet:
+    context-path: /vue_shop
+  port: 8888
+  maxHttpHeaderSize : 3145728
+
+spring:
+  datasource:
+#    type: com.alibaba.druid.pool.DruidDataSource
+    #MySQL配置
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/db_vue_shop?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+
+
+mybatis:
+  # 配置mapper对应的实体类包扫描
+  typeAliasesPackage: com.example.springboot_shop.entity
+  # 配置mapper.xml文件扫描
+  mapper-locations: classpath:mapper/sys/*.xml
+  # 开启驼峰命名
+  configuration:
+      mapUnderscoreToCamelCase: true
+
+#控制台中打印输出sql语句
+logging:
+  level:
+      com.example.springboot_shop.dao: debug
