@@ -10,6 +10,10 @@ public class ResultFactory {
         return buildResult(data,message,StatusCode.SUCCESS.code);
     }
 
+    public static Response buildAddSuccessResult(Object data,String message) {
+        return buildResult(data,message,StatusCode.ADDSUCCSESS.code);
+    }
+
     public static Response buildFailResult(String message) {
         return buildResult(null,message,StatusCode.FAIL.code);
     }

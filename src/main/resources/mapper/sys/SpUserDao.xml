@@ -35,4 +35,117 @@
         </where>
     </select>
 
+    <!--<insert id="insertSelective" parameterType="com.example.springboot_shop.entity.SpUser" >-->
+        <!--insert into sp_user-->
+        <!--<trim prefix="(" suffix=")" suffixOverrides="," >-->
+            <!--<if test="userId != null" >-->
+                <!--user_id,-->
+            <!--</if>-->
+            <!--<if test="username != null" >-->
+                <!--username,-->
+            <!--</if>-->
+            <!--<if test="qqOpenId != null" >-->
+                <!--qq_open_id,-->
+            <!--</if>-->
+            <!--<if test="password != null" >-->
+                <!--password,-->
+            <!--</if>-->
+            <!--<if test="userEmail != null" >-->
+                <!--user_email,-->
+            <!--</if>-->
+            <!--<if test="userEmailCode != null" >-->
+                <!--user_email_code,-->
+            <!--</if>-->
+            <!--<if test="isActive != null" >-->
+                <!--is_active,-->
+            <!--</if>-->
+            <!--<if test="userSex != null" >-->
+                <!--user_sex,-->
+            <!--</if>-->
+            <!--<if test="userQq != null" >-->
+                <!--user_qq,-->
+            <!--</if>-->
+            <!--<if test="userTel != null" >-->
+                <!--user_tel,-->
+            <!--</if>-->
+            <!--<if test="userXueli != null" >-->
+                <!--user_xueli,-->
+            <!--</if>-->
+            <!--<if test="userHobby != null" >-->
+                <!--user_hobby,-->
+            <!--</if>-->
+            <!--<if test="createTime != null" >-->
+                <!--create_time,-->
+            <!--</if>-->
+            <!--<if test="updateTime != null" >-->
+                <!--update_time,-->
+            <!--</if>-->
+            <!--<if test="userIntroduce != null" >-->
+                <!--user_introduce,-->
+            <!--</if>-->
+        <!--</trim>-->
+        <!--<trim prefix="values (" suffix=")" suffixOverrides="," >-->
+            <!--<if test="userId != null" >-->
+                <!--#{userId,jdbcType=INTEGER},-->
+            <!--</if>-->
+            <!--<if test="username != null" >-->
+                <!--#{username,jdbcType=VARCHAR},-->
+            <!--</if>-->
+            <!--<if test="qqOpenId != null" >-->
+                <!--#{qqOpenId,jdbcType=CHAR},-->
+            <!--</if>-->
+            <!--<if test="password != null" >-->
+                <!--#{password,jdbcType=CHAR},-->
+            <!--</if>-->
+            <!--<if test="userEmail != null" >-->
+                <!--#{userEmail,jdbcType=VARCHAR},-->
+            <!--</if>-->
+            <!--<if test="userEmailCode != null" >-->
+                <!--#{userEmailCode,jdbcType=CHAR},-->
+            <!--</if>-->
+            <!--<if test="isActive != null" >-->
+                <!--#{isActive,jdbcType=CHAR},-->
+            <!--</if>-->
+            <!--<if test="userSex != null" >-->
+                <!--#{userSex,jdbcType=CHAR},-->
+            <!--</if>-->
+            <!--<if test="userQq != null" >-->
+                <!--#{userQq,jdbcType=VARCHAR},-->
+            <!--</if>-->
+            <!--<if test="userTel != null" >-->
+                <!--#{userTel,jdbcType=VARCHAR},-->
+            <!--</if>-->
+            <!--<if test="userXueli != null" >-->
+                <!--#{userXueli,jdbcType=CHAR},-->
+            <!--</if>-->
+            <!--<if test="userHobby != null" >-->
+                <!--#{userHobby,jdbcType=VARCHAR},-->
+            <!--</if>-->
+            <!--<if test="createTime != null" >-->
+                <!--#{createTime,jdbcType=INTEGER},-->
+            <!--</if>-->
+            <!--<if test="updateTime != null" >-->
+                <!--#{updateTime,jdbcType=INTEGER},-->
+            <!--</if>-->
+            <!--<if test="userIntroduce != null" >-->
+                <!--#{userIntroduce,jdbcType=LONGVARCHAR},-->
+            <!--</if>-->
+        <!--</trim>-->
+    <!--</insert>-->
+
+    <insert id="insertSelective" parameterType="com.example.springboot_shop.entity.SpUser" >
+        insert into sp_user (username) values (#{username})
+        <!--<trim prefix="(" suffix=")" suffixOverrides="," >-->
+            <!--<if test="username != null" >-->
+            <!--username,-->
+            <!--</if>-->
+        <!--</trim>-->
+        <!--<trim prefix="values (" suffix=")" suffixOverrides="," >-->
+            <!--<if test="username != null" >-->
+            <!--#{username,jdbcType=VARCHAR},-->
+            <!--</if>-->
+        <!--</trim>-->
+    </insert>
+
+
 </mapper>

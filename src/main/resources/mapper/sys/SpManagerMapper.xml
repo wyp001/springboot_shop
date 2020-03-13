@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.springboot_shop.dao.SpManagerMapper" >
+  <resultMap id="BaseResultMap" type="com.example.springboot_shop.entity.SpManager" >
+    <id column="mg_id" property="mgId" jdbcType="INTEGER" />
+    <result column="mg_name" property="mgName" jdbcType="VARCHAR" />
+    <result column="mg_pwd" property="mgPwd" jdbcType="CHAR" />
+    <result column="mg_time" property="mgTime" jdbcType="INTEGER" />
+    <result column="role_id" property="roleId" jdbcType="TINYINT" />
+    <result column="mg_mobile" property="mgMobile" jdbcType="VARCHAR" />
+    <result column="mg_email" property="mgEmail" jdbcType="VARCHAR" />
+    <result column="mg_state" property="mgState" jdbcType="TINYINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    mg_id, mg_name, mg_pwd, mg_time, role_id, mg_mobile, mg_email, mg_state
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sp_manager
+    where mg_id = #{mgId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sp_manager
+    where mg_id = #{mgId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.springboot_shop.entity.SpManager" >
+    insert into sp_manager (mg_id, mg_name, mg_pwd, 
+      mg_time, role_id, mg_mobile, 
+      mg_email, mg_state)
+    values (#{mgId,jdbcType=INTEGER}, #{mgName,jdbcType=VARCHAR}, #{mgPwd,jdbcType=CHAR}, 
+      #{mgTime,jdbcType=INTEGER}, #{roleId,jdbcType=TINYINT}, #{mgMobile,jdbcType=VARCHAR}, 
+      #{mgEmail,jdbcType=VARCHAR}, #{mgState,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.springboot_shop.entity.SpManager" >
+    insert into sp_manager
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="mgId != null" >
+        mg_id,
+      </if>
+      <if test="mgName != null" >
+        mg_name,
+      </if>
+      <if test="mgPwd != null" >
+        mg_pwd,
+      </if>
+      <if test="mgTime != null" >
+        mg_time,
+      </if>
+      <if test="roleId != null" >
+        role_id,
+      </if>
+      <if test="mgMobile != null" >
+        mg_mobile,
+      </if>
+      <if test="mgEmail != null" >
+        mg_email,
+      </if>
+      <if test="mgState != null" >
+        mg_state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="mgId != null" >
+        #{mgId,jdbcType=INTEGER},
+      </if>
+      <if test="mgName != null" >
+        #{mgName,jdbcType=VARCHAR},
+      </if>
+      <if test="mgPwd != null" >
+        #{mgPwd,jdbcType=CHAR},
+      </if>
+      <if test="mgTime != null" >
+        #{mgTime,jdbcType=INTEGER},
+      </if>
+      <if test="roleId != null" >
+        #{roleId,jdbcType=TINYINT},
+      </if>
+      <if test="mgMobile != null" >
+        #{mgMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="mgEmail != null" >
+        #{mgEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="mgState != null" >
+        #{mgState,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.springboot_shop.entity.SpManager" >
+    update sp_manager
+    <set >
+      <if test="mgName != null" >
+        mg_name = #{mgName,jdbcType=VARCHAR},
+      </if>
+      <if test="mgPwd != null" >
+        mg_pwd = #{mgPwd,jdbcType=CHAR},
+      </if>
+      <if test="mgTime != null" >
+        mg_time = #{mgTime,jdbcType=INTEGER},
+      </if>
+      <if test="roleId != null" >
+        role_id = #{roleId,jdbcType=TINYINT},
+      </if>
+      <if test="mgMobile != null" >
+        mg_mobile = #{mgMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="mgEmail != null" >
+        mg_email = #{mgEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="mgState != null" >
+        mg_state = #{mgState,jdbcType=TINYINT},
+      </if>
+    </set>
+    where mg_id = #{mgId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.springboot_shop.entity.SpManager" >
+    update sp_manager
+    set mg_name = #{mgName,jdbcType=VARCHAR},
+      mg_pwd = #{mgPwd,jdbcType=CHAR},
+      mg_time = #{mgTime,jdbcType=INTEGER},
+      role_id = #{roleId,jdbcType=TINYINT},
+      mg_mobile = #{mgMobile,jdbcType=VARCHAR},
+      mg_email = #{mgEmail,jdbcType=VARCHAR},
+      mg_state = #{mgState,jdbcType=TINYINT}
+    where mg_id = #{mgId,jdbcType=INTEGER}
+  </update>
+</mapper>

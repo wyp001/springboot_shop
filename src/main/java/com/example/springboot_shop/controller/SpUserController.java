@@ -2,13 +2,12 @@ package com.example.springboot_shop.controller;
 
 import com.example.springboot_shop.entity.SpUser;
 import com.example.springboot_shop.service.SpUserService;
+import com.example.springboot_shop.utils.R;
 import com.example.springboot_shop.utils.Response;
 import com.example.springboot_shop.utils.ResultFactory;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -30,8 +29,8 @@ public class SpUserController {
     /**
      * 列表
      */
-    @ResponseBody
-    @RequestMapping("/users")
+//    @ResponseBody
+//    @RequestMapping("/users")
     public Response list(String username) {
         PageInfo<SpUser> pageInfo = spUserService.queryPage(username,1,5);
         Map<String,Object> data = new HashMap<>();

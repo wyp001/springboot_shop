@@ -6,6 +6,7 @@ package com.example.springboot_shop.utils;
  */
 public enum StatusCode {
     SUCCESS(200),
+    ADDSUCCSESS(201),
     FAIL(400);
     public int code;
 
