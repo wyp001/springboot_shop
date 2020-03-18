@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.springboot_shop.dao.SpRoleMapper" >
+  <resultMap id="BaseResultMap" type="com.example.springboot_shop.entity.SpRole" >
+    <id column="role_id" property="roleId" jdbcType="SMALLINT" />
+    <result column="role_name" property="roleName" jdbcType="VARCHAR" />
+    <!--<result column="ps_ids" property="psIds" jdbcType="VARCHAR" />-->
+    <result column="ps_ca" property="psCa" jdbcType="VARCHAR"/>
+    <result column="role_desc" property="roleDesc" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.example.springboot_shop.entity.SpRoleWithBLOBs" extends="BaseResultMap">
+    <result column="ps_ids" property="psIds" jdbcType="VARCHAR" />
+    <result column="ps_ca" property="psCa" jdbcType="LONGVARCHAR" />
+    <result column="role_desc" property="roleDesc" jdbcType="LONGVARCHAR" />
+    <collection property="children" ofType="com.example.springboot_shop.entity.SpPermission">
+      <id column="ps_id" property="psId" jdbcType="SMALLINT" />
+      <result column="ps_name" property="psName" jdbcType="VARCHAR" />
+      <result column="ps_pid" property="psPid" jdbcType="SMALLINT" />
+      <result column="ps_c" property="psC" jdbcType="VARCHAR" />
+      <result column="ps_a" property="psA" jdbcType="VARCHAR" />
+      <result column="ps_level" property="psLevel" jdbcType="CHAR" />
+    </collection>
+  </resultMap>
+  
+  <resultMap id="RoleInfo" type="spRole">
+    <id column="role_id" property="roleId" jdbcType="SMALLINT" />
+    <result column="role_name" property="roleName" jdbcType="VARCHAR" />
+    <result column="role_desc" property="roleDesc" jdbcType="VARCHAR" />
+  </resultMap>
+
+
+  <sql id="Base_Column_List">
+    role_id, role_name, role_desc
+  </sql>
+  <sql id="Blob_Column_List" >
+    ps_ids, ps_ca, role_desc
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Short" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from sp_role
+    where role_id = #{roleId,jdbcType=SMALLINT}
+  </select>
+
+  <select id="selectBySelective" resultMap="ResultMapWithBLOBs" parameterType="spRoleWithBLOBs" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    ,ps_id,ps_name,ps_pid,ps_c,ps_a,ps_level
+    from sp_role as role ,sp_permission as ps
+    #     left join sp_permission ps
+    where role_id = #{roleId,jdbcType=SMALLINT}
+    and ps_id in
+    <foreach item="item" index="index" collection="psIds.split(',')" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+
+  </select>
+
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Short" >
+    delete from sp_role
+    where role_id = #{roleId,jdbcType=SMALLINT}
+  </delete>
+  <insert id="insert" parameterType="com.example.springboot_shop.entity.SpRoleWithBLOBs" >
+    insert into sp_role (role_id, role_name, ps_ids, 
+      ps_ca, role_desc)
+    values (#{roleId,jdbcType=SMALLINT}, #{roleName,jdbcType=VARCHAR}, #{psIds,jdbcType=VARCHAR}, 
+      #{psCa,jdbcType=LONGVARCHAR}, #{roleDesc,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.springboot_shop.entity.SpRoleWithBLOBs" >
+    insert into sp_role
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="roleId != null" >
+        role_id,
+      </if>
+      <if test="roleName != null" >
+        role_name,
+      </if>
+      <if test="psIds != null" >
+        ps_ids,
+      </if>
+      <if test="psCa != null" >
+        ps_ca,
+      </if>
+      <if test="roleDesc != null" >
+        role_desc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="roleId != null" >
+        #{roleId,jdbcType=SMALLINT},
+      </if>
+      <if test="roleName != null" >
+        #{roleName,jdbcType=VARCHAR},
+      </if>
+      <if test="psIds != null" >
+        #{psIds,jdbcType=VARCHAR},
+      </if>
+      <if test="psCa != null" >
+        #{psCa,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="roleDesc != null" >
+        #{roleDesc,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.springboot_shop.entity.SpRoleWithBLOBs" >
+    update sp_role
+    <set >
+      <if test="roleName != null" >
+        role_name = #{roleName,jdbcType=VARCHAR},
+      </if>
+      <if test="psIds != null" >
+        ps_ids = #{psIds,jdbcType=VARCHAR},
+      </if>
+      <if test="psCa != null" >
+        ps_ca = #{psCa,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="roleDesc != null" >
+        role_desc = #{roleDesc,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where role_id = #{roleId,jdbcType=SMALLINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.example.springboot_shop.entity.SpRoleWithBLOBs" >
+    update sp_role
+    set role_name = #{roleName,jdbcType=VARCHAR},
+      ps_ids = #{psIds,jdbcType=VARCHAR},
+      ps_ca = #{psCa,jdbcType=LONGVARCHAR},
+      role_desc = #{roleDesc,jdbcType=LONGVARCHAR}
+    where role_id = #{roleId,jdbcType=SMALLINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.springboot_shop.entity.SpRole" >
+    update sp_role
+    set role_name = #{roleName,jdbcType=VARCHAR},
+      role_desc = #{roleDesc,jdbcType=LONGVARCHAR}
+    where role_id = #{roleId,jdbcType=SMALLINT}
+  </update>
+  
+  <select id="getRoleList" resultType="spRoleWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from sp_role
+  </select>
+  
+  
+  
+</mapper>
