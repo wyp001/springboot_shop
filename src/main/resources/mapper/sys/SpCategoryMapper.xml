@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.springboot_shop.dao.SpCategoryMapper" >
+  <resultMap id="BaseResultMap" type="com.example.springboot_shop.entity.SpCategory" >
+    <id column="cat_id" property="catId" jdbcType="INTEGER" />
+    <result column="cat_name" property="catName" jdbcType="VARCHAR" />
+    <result column="cat_pid" property="catPid" jdbcType="INTEGER" />
+    <result column="cat_level" property="catLevel" jdbcType="INTEGER" />
+    <result column="cat_deleted" property="catDeleted" jdbcType="INTEGER" />
+    <result column="cat_icon" property="catIcon" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.example.springboot_shop.entity.SpCategory" extends="BaseResultMap" >
+    <result column="cat_src" property="catSrc" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    cat_id, cat_name, cat_pid, cat_level, cat_deleted, cat_icon
+  </sql>
+  <sql id="Blob_Column_List" >
+    cat_src
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from sp_category
+    where cat_id = #{catId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sp_category
+    where cat_id = #{catId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.springboot_shop.entity.SpCategory" >
+    insert into sp_category (cat_id, cat_name, cat_pid, 
+      cat_level, cat_deleted, cat_icon, 
+      cat_src)
+    values (#{catId,jdbcType=INTEGER}, #{catName,jdbcType=VARCHAR}, #{catPid,jdbcType=INTEGER}, 
+      #{catLevel,jdbcType=INTEGER}, #{catDeleted,jdbcType=INTEGER}, #{catIcon,jdbcType=VARCHAR}, 
+      #{catSrc,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.springboot_shop.entity.SpCategory" >
+    insert into sp_category
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="catId != null" >
+        cat_id,
+      </if>
+      <if test="catName != null" >
+        cat_name,
+      </if>
+      <if test="catPid != null" >
+        cat_pid,
+      </if>
+      <if test="catLevel != null" >
+        cat_level,
+      </if>
+      <if test="catDeleted != null" >
+        cat_deleted,
+      </if>
+      <if test="catIcon != null" >
+        cat_icon,
+      </if>
+      <if test="catSrc != null" >
+        cat_src,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="catId != null" >
+        #{catId,jdbcType=INTEGER},
+      </if>
+      <if test="catName != null" >
+        #{catName,jdbcType=VARCHAR},
+      </if>
+      <if test="catPid != null" >
+        #{catPid,jdbcType=INTEGER},
+      </if>
+      <if test="catLevel != null" >
+        #{catLevel,jdbcType=INTEGER},
+      </if>
+      <if test="catDeleted != null" >
+        #{catDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="catIcon != null" >
+        #{catIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="catSrc != null" >
+        #{catSrc,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.springboot_shop.entity.SpCategory" >
+    update sp_category
+    <set >
+      <if test="catName != null" >
+        cat_name = #{catName,jdbcType=VARCHAR},
+      </if>
+      <if test="catPid != null" >
+        cat_pid = #{catPid,jdbcType=INTEGER},
+      </if>
+      <if test="catLevel != null" >
+        cat_level = #{catLevel,jdbcType=INTEGER},
+      </if>
+      <if test="catDeleted != null" >
+        cat_deleted = #{catDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="catIcon != null" >
+        cat_icon = #{catIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="catSrc != null" >
+        cat_src = #{catSrc,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where cat_id = #{catId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.example.springboot_shop.entity.SpCategory" >
+    update sp_category
+    set cat_name = #{catName,jdbcType=VARCHAR},
+      cat_pid = #{catPid,jdbcType=INTEGER},
+      cat_level = #{catLevel,jdbcType=INTEGER},
+      cat_deleted = #{catDeleted,jdbcType=INTEGER},
+      cat_icon = #{catIcon,jdbcType=VARCHAR},
+      cat_src = #{catSrc,jdbcType=LONGVARCHAR}
+    where cat_id = #{catId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.springboot_shop.entity.SpCategory" >
+    update sp_category
+    set cat_name = #{catName,jdbcType=VARCHAR},
+      cat_pid = #{catPid,jdbcType=INTEGER},
+      cat_level = #{catLevel,jdbcType=INTEGER},
+      cat_deleted = #{catDeleted,jdbcType=INTEGER},
+      cat_icon = #{catIcon,jdbcType=VARCHAR}
+    where cat_id = #{catId,jdbcType=INTEGER}
+  </update>
+
+  <select id="getCategoryList" resultType="spCategory">
+    select *
+    from sp_category
+    where cat_deleted = 0
+  </select>
+
+
+</mapper>
