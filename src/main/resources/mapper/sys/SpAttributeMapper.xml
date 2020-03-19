@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.springboot_shop.dao.SpAttributeMapper" >
+  <resultMap id="BaseResultMap" type="com.example.springboot_shop.entity.SpAttribute" >
+    <id column="attr_id" property="attrId" jdbcType="SMALLINT" />
+    <result column="attr_name" property="attrName" jdbcType="VARCHAR" />
+    <result column="cat_id" property="catId" jdbcType="SMALLINT" />
+    <result column="attr_sel" property="attrSel" jdbcType="CHAR" />
+    <result column="attr_write" property="attrWrite" jdbcType="CHAR" />
+    <result column="delete_time" property="deleteTime" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.example.springboot_shop.entity.SpAttribute" extends="BaseResultMap" >
+    <result column="attr_vals" property="attrVals" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    attr_id, attr_name, cat_id, attr_sel, attr_write, delete_time
+  </sql>
+  <sql id="Blob_Column_List" >
+    attr_vals
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Short" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from sp_attribute
+    where attr_id = #{attrId,jdbcType=SMALLINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Short" >
+    delete from sp_attribute
+    where attr_id = #{attrId,jdbcType=SMALLINT}
+  </delete>
+  <insert id="insert" parameterType="com.example.springboot_shop.entity.SpAttribute" >
+    insert into sp_attribute (attr_id, attr_name, cat_id, 
+      attr_sel, attr_write, delete_time, 
+      attr_vals)
+    values (#{attrId,jdbcType=SMALLINT}, #{attrName,jdbcType=VARCHAR}, #{catId,jdbcType=SMALLINT}, 
+      #{attrSel,jdbcType=CHAR}, #{attrWrite,jdbcType=CHAR}, #{deleteTime,jdbcType=INTEGER}, 
+      #{attrVals,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.springboot_shop.entity.SpAttribute" >
+    insert into sp_attribute
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="attrId != null" >
+        attr_id,
+      </if>
+      <if test="attrName != null" >
+        attr_name,
+      </if>
+      <if test="catId != null" >
+        cat_id,
+      </if>
+      <if test="attrSel != null" >
+        attr_sel,
+      </if>
+      <if test="attrWrite != null" >
+        attr_write,
+      </if>
+      <if test="deleteTime != null" >
+        delete_time,
+      </if>
+      <if test="attrVals != null" >
+        attr_vals,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="attrId != null" >
+        #{attrId,jdbcType=SMALLINT},
+      </if>
+      <if test="attrName != null" >
+        #{attrName,jdbcType=VARCHAR},
+      </if>
+      <if test="catId != null" >
+        #{catId,jdbcType=SMALLINT},
+      </if>
+      <if test="attrSel != null" >
+        #{attrSel,jdbcType=CHAR},
+      </if>
+      <if test="attrWrite != null" >
+        #{attrWrite,jdbcType=CHAR},
+      </if>
+      <if test="deleteTime != null" >
+        #{deleteTime,jdbcType=INTEGER},
+      </if>
+      <if test="attrVals != null" >
+        #{attrVals,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.springboot_shop.entity.SpAttribute" >
+    update sp_attribute
+    <set >
+      <if test="attrName != null" >
+        attr_name = #{attrName,jdbcType=VARCHAR},
+      </if>
+      <if test="catId != null" >
+        cat_id = #{catId,jdbcType=SMALLINT},
+      </if>
+      <if test="attrSel != null" >
+        attr_sel = #{attrSel,jdbcType=CHAR},
+      </if>
+      <if test="attrWrite != null" >
+        attr_write = #{attrWrite,jdbcType=CHAR},
+      </if>
+      <if test="deleteTime != null" >
+        delete_time = #{deleteTime,jdbcType=INTEGER},
+      </if>
+      <if test="attrVals != null" >
+        attr_vals = #{attrVals,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where attr_id = #{attrId,jdbcType=SMALLINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.example.springboot_shop.entity.SpAttribute" >
+    update sp_attribute
+    set attr_name = #{attrName,jdbcType=VARCHAR},
+      cat_id = #{catId,jdbcType=SMALLINT},
+      attr_sel = #{attrSel,jdbcType=CHAR},
+      attr_write = #{attrWrite,jdbcType=CHAR},
+      delete_time = #{deleteTime,jdbcType=INTEGER},
+      attr_vals = #{attrVals,jdbcType=LONGVARCHAR}
+    where attr_id = #{attrId,jdbcType=SMALLINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.springboot_shop.entity.SpAttribute" >
+    update sp_attribute
+    set attr_name = #{attrName,jdbcType=VARCHAR},
+      cat_id = #{catId,jdbcType=SMALLINT},
+      attr_sel = #{attrSel,jdbcType=CHAR},
+      attr_write = #{attrWrite,jdbcType=CHAR},
+      delete_time = #{deleteTime,jdbcType=INTEGER}
+    where attr_id = #{attrId,jdbcType=SMALLINT}
+  </update>
+  
+  <select id="getAttributeList" resultType="spAttribute">
+    select *
+    from sp_attribute
+    where cat_id = #{cate_id}
+    and  attr_sel = #{sel};
+  </select>
+
+  <select id="getAttributeSelective" resultType="spAttribute">
+    select *
+    from sp_attribute
+    where attr_id = #{attr_id}
+    and attr_sel = #{attr_sel};
+  </select>
+  
+</mapper>
